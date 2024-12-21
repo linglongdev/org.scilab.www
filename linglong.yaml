@@ -1,61 +1,27 @@
 version: "1"
 
 package:
-  id: org.scilab.scilab
+  id: org.scilab.scilab.linyaps
   name: Scilab
   version: 2025.0.0.0
   kind: app
   description: |
-    Scilab 是一个开源的跨平台数值计算包和高级的数值编程语言。
-
+    Scilab 是一个开源的跨平台数值计算软件包。
+command:
+  - /opt/apps/org.scilab.scilab.linyaps/files/bin/scilab
+  
 base: org.deepin.foundation/23.0.0
 runtime: org.deepin.Runtime/23.0.1
 
 sources:
-  - kind: git
-    url: https://gitlab.com/scilab/scilab.git
-    branch: minor
-    commit: f4ed289e8d109b71e59feeb021f499f55c1231b5
-    verify: false
+  - kind: file
+    url: https://www.scilab.org/download/2025.0.0/scilab-2025.0.0.bin.x86_64-linux-gnu.tar.xz
+    digest: f74e47a63a4d5a7ba927bfdf9745e3ede3c3a5e3158b4d8e9c4c8879ac0d7
 
 build: |
-  # 安装必要的依赖
-  apt-get update && apt-get install -y \
-    build-essential \
-    cmake \
-    automake \
-    autoconf \
-    libtool \
-    libx11-dev \
-    libreadline-dev \
-    libjava3d-java \
-    libjava3d-jni \
-    libblas-dev \
-    liblapack-dev \
-    libfftw3-dev \
-    libhdf5-dev \
-    libxml2-dev \
-    libcurl4-openssl-dev \
-    openjdk-11-jdk \
-    gettext \
-    swig \
-    python3 \
-    python3-numpy \
-    python3-dev \
-    python3-scipy \
-    ant \
-    git
+  # 创建必要的目录
+  mkdir -p ${PREFIX}
+  # 解压文件到指定目录
+  cd /project/linglong/sources/
+  tar -xf scilab-2025.0.0.bin.x86_64-linux-gnu.tar.xz --strip-components=1 -C ${PREFIX}
 
-  # 克隆最新的源代码
-  git clone https://gitlab.com/scilab/scilab.git
-  cd scilab/scilab
-
-  # 运行 Autotools 配置脚本
-  ./configure --prefix=${PREFIX}
-
-  # 编译并安装
-  make -j$(nproc)
-  make install
-
-command:
-  - /opt/apps/org.scilab.scilab/files/bin/scilab
