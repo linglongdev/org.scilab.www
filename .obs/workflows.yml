@@ -1,0 +1,36 @@
+test_build:
+  filters:
+    event: pull_request
+  steps:
+    - branch_package:
+        source_project: linglong:app
+        source_package: template_CI
+        target_project: linglong:app:CI:amd64
+        target_package: %{SCM_REPOSITORY_NAME}
+    - set_flags:
+        flags:
+          - type: build
+            status: enable
+            project: linglong:app:CI:amd64
+          - type: publish
+            status: enable
+            project: linglong:app:CI:amd64
+    - configure_repositories:
+        project: linglong:app:CI:amd64
+        repositories:
+          - name: deepin_23_repo
+            paths:
+              - target_project: linglong:app:CI
+                target_repository: deepin_23_repo
+            architectures:
+              - x86_64
+
+commit_build:
+  steps:
+    - branch_package:
+        source_project: linglong:app
+        source_package: template_CI
+        target_project: linglong:app:stable:amd64
+        target_package: %{SCM_REPOSITORY_NAME}
+  filters:
+    event: tag_push
