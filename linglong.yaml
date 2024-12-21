@@ -1,0 +1,28 @@
+version: "1"
+
+package:
+  id: org.scilab.scilab.linyaps
+  name: Scilab
+  version: 2025.0.0.0
+  kind: app
+  description: |
+    Scilab 是一个开源的跨平台数值计算软件包。
+command:
+  - /opt/apps/org.scilab.scilab.linyaps/files/bin/scilab
+  
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: file
+    url: https://www.scilab.org/download/2025.0.0/scilab-2025.0.0.bin.x86_64-linux-gnu.tar.xz
+    digest: f74e47a63a4d5a7ba927bfdf9745e3ede3c3a5e3158b4d8e9c4c8879ac0d7
+
+build: |
+  # 创建必要的目录
+  mkdir -p ${PREFIX}
+
+  # 解压文件到指定目录
+  cd /project/linglong/sources/
+  tar -xf scilab-2025.0.0.bin.x86_64-linux-gnu.tar.xz --strip-components=1 -C ${PREFIX}
+
