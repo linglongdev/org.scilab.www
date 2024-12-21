@@ -21,6 +21,7 @@ sources:
 build: |
   # 创建必要的目录
   mkdir -p ${PREFIX}
+
   # 解压文件到指定目录
   cd /project/linglong/sources/
   tar -xf scilab-2025.0.0.bin.x86_64-linux-gnu.tar.xz --strip-components=1 -C ${PREFIX}
